@@ -8,7 +8,13 @@
 </head>
 <body>
     <canvas id="draw" width="800" height="800"></canvas>
-    
+    <script>
+        const canvas = document.getElementById('draw');
+        const canvasCtx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    </script>
 </body>
 </html>
 
