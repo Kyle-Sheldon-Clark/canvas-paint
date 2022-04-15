@@ -9,7 +9,9 @@
 </head>
 <body>
     <div id="container">
-        <div id="toolbar"></div>
+        <div id="toolbar">
+            <input id="changeColor" type="range" min="0" max="360">
+        </div>
         <canvas id="draw" width="800" height="800"></canvas>
     </div>
     <script>
@@ -24,6 +26,7 @@
         canvasCtx.lineCap = 'round';
 
         let isDrawing = false;
+        let gradualHueChange = true;
 
         let lastX = 0;
         let lastY = 0;
@@ -43,7 +46,10 @@
 
             lastX = event.offsetX;
             lastY = event.offsetY;
-            hue++;
+            if (gradualHueChange) {
+                hue++;
+            }
+            
             if (hue >= 360) {
                 hue = 0;
             }
@@ -66,6 +72,11 @@
         });
         canvas.addEventListener('mouseup', () => isDrawing = false);
         canvas.addEventListener('mouseout', () => isDrawing = false);
+        let slider = document.getElementById('changeColor');
+        slider.oninput = function() {
+            hue = this.value;
+            gradualHueChange = false;
+        }
     </script>
 </body>
 </html>
