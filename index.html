@@ -11,6 +11,7 @@
     <div id="container">
         <div id="toolbar">
             <input id="changeColor" type="range" min="0" max="360">
+            <input id="changeLineWidth" type="range" min="1" max="100">
         </div>
         <canvas id="draw" width="800" height="800"></canvas>
     </div>
@@ -27,12 +28,14 @@
 
         let isDrawing = false;
         let gradualHueChange = true;
+        let gradualWidthChange = true;
 
         let lastX = 0;
         let lastY = 0;
         let hue = 0;
-        canvasCtx.lineWidth = 1;
+        let currentLineWidth = 1;
         let increasing = true;
+
 
         function draw(event) {
             if (!isDrawing) {
@@ -53,13 +56,18 @@
             if (hue >= 360) {
                 hue = 0;
             }
-            if (canvasCtx.lineWidth >= 100 || canvasCtx.lineWidth <= 1) {
-                increasing = !increasing;
-            }
-            if (increasing) {
-                canvasCtx.lineWidth++;
-            } else {
-                canvasCtx.lineWidth--;
+
+            if (gradualWidthChange) {
+                if (canvasCtx.lineWidth >= 100 || canvasCtx.lineWidth <= 1) {
+                    increasing = !increasing;
+                }
+                if (increasing) {
+                    canvasCtx.lineWidth++;
+                } else {
+                    canvasCtx.lineWidth--;
+                }
+            }else {
+                canvasCtx.lineWidth = currentLineWidth;
             }
         }
 
@@ -72,11 +80,16 @@
         });
         canvas.addEventListener('mouseup', () => isDrawing = false);
         canvas.addEventListener('mouseout', () => isDrawing = false);
-        let slider = document.getElementById('changeColor');
-        slider.oninput = function() {
+        let changeColor = document.getElementById('changeColor');
+        changeColor.oninput = function() {
             hue = this.value;
             gradualHueChange = false;
-        }
+        };
+        let changeLineWidth = document.getElementById('changeLineWidth');
+        changeLineWidth.addEventListener('change', function() {
+            currentLineWidth = this.value;
+            gradualWidthChange = false;
+        });
     </script>
 </body>
 </html>
