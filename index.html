@@ -10,11 +10,20 @@
 <body>
     <div id="container">
         <div id="toolbar">
-            <input id="changeColor" type="range" min="0" max="360">
-            <input id="changeLineWidth" type="range" min="1" max="100">
+            <div>
+                <p>Change Hue:</p>
+                <input id="changeColor" type="range" min="0" max="360">
+            </div>
+            <div>
+                <p>Change Width:</p>
+                <input id="changeLineWidth" type="range" min="1" max="100">
+            </div>
             <button id="gradualWidthChange">Gradually Change Line Width</button>
             <button id="gradualHueChange">Gradually Change Color</button>
-            <input type="color" id="colorPicker">
+            <div>
+                <p>Select a Color:</p>
+                <input type="color" id="colorPicker">
+            </div>
         </div>
         <canvas id="draw" width="800" height="800"></canvas>
     </div>
