@@ -12,8 +12,9 @@
         <div id="toolbar">
             <input id="changeColor" type="range" min="0" max="360">
             <input id="changeLineWidth" type="range" min="1" max="100">
-            <button onclick="gradualWidthChange = true">Gradually Change Line Width</button>
-            <button onclick="gradualHueChange = true">Gradually Change Color</button>
+            <button id="gradualWidthChange">Gradually Change Line Width</button>
+            <button id="gradualHueChange">Gradually Change Color</button>
+            <input type="color" id="colorPicker">
         </div>
         <canvas id="draw" width="800" height="800"></canvas>
     </div>
@@ -31,6 +32,8 @@
         let isDrawing = false;
         let gradualHueChange = true;
         let gradualWidthChange = true;
+        let selectedColor = '#ff0000';
+        let useSelectedColor = false;
 
         let lastX = 0;
         let lastY = 0;
@@ -43,7 +46,12 @@
             if (!isDrawing) {
                 return;
             }
-            canvasCtx.strokeStyle = `hsl(${hue}, 100%, 50%`;
+            if (useSelectedColor) {
+                canvasCtx.strokeStyle = `${selectedColor}`;
+            } else {
+                canvasCtx.strokeStyle = `hsl(${hue}, 100%, 50%`;
+            }
+
             canvasCtx.beginPath();
             canvasCtx.moveTo(lastX, lastY);
             canvasCtx.lineTo(event.offsetX, event.offsetY);
@@ -82,15 +90,25 @@
         });
         canvas.addEventListener('mouseup', () => isDrawing = false);
         canvas.addEventListener('mouseout', () => isDrawing = false);
-        let changeColor = document.getElementById('changeColor');
-        changeColor.oninput = function() {
+        document.getElementById('changeColor').oninput = function() {
             hue = this.value;
             gradualHueChange = false;
+            useSelectedColor = false;
         };
-        let changeLineWidth = document.getElementById('changeLineWidth');
-        changeLineWidth.addEventListener('change', function() {
+        document.getElementById('changeLineWidth').addEventListener('change', function() {
             currentLineWidth = this.value;
             gradualWidthChange = false;
+        });
+        document.getElementById('gradualWidthChange').addEventListener('mousedown', function () {
+            gradualWidthChange = true;
+        });
+        document.getElementById('gradualHueChange').addEventListener('mousedown', function () {
+            gradualHueChange = true;
+            useSelectedColor = false;
+        });
+        document.getElementById('colorPicker').addEventListener('change', function () {
+            selectedColor = this.value;
+            useSelectedColor = true;
         });
     </script>
 </body>
