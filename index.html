@@ -109,7 +109,9 @@
             hue = this.value;
             gradualHueChange = false;
             useSelectedColor = false;
+            this.style.background = `hsl(${hue}, 100%, 50%)`;
         };
+        
         document.getElementById('changeLineWidth').addEventListener('change', function() {
             currentLineWidth = this.value;
             gradualWidthChange = false;
