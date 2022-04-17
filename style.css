@@ -30,6 +30,12 @@ button {
     background-color: hsla(270, 100%, 50%, 0.5);
     font-size: 1rem;
 }
+
+#colorPicker {
+    background: none;
+    border: none;
+}
+
 #draw {
     width: 100vw;
     height: 90vh;
