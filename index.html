@@ -20,6 +20,7 @@
             </div>
             <button id="gradualWidthChange">Gradually Change Line Width</button>
             <button id="gradualHueChange">Gradually Change Color</button>
+            <button id="clearCanvas">Reset</button>
             <div>
                 <p>Select a Color:</p>
                 <input type="color" id="colorPicker">
@@ -49,6 +50,11 @@
         let hue = 0;
         let currentLineWidth = 1;
         let increasing = true;
+
+        function clearCanvas() {
+            canvasCtx.fillStyle = 'white';
+            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+        }
 
 
         function draw(event) {
@@ -114,6 +120,9 @@
         document.getElementById('gradualHueChange').addEventListener('mousedown', function () {
             gradualHueChange = true;
             useSelectedColor = false;
+        });
+        document.getElementById('clearCanvas').addEventListener('mousedown', function () {
+            clearCanvas();
         });
         document.getElementById('colorPicker').addEventListener('change', function () {
             selectedColor = this.value;
